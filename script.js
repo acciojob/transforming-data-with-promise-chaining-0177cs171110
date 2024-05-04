@@ -1,67 +1,55 @@
-//your JS code here. If required.
-const input = document.getElementById('ip');
-const output = document.getElementById('output');
-const btn = document.getElementById('btn');
+document.getElementById("btn").addEventListener("click", () => {
+  const inputNumber = parseInt(document.getElementById("ip").value);
 
-btn.addEventListener('click', () => {
-  const promise1 = new Promise((resolve) => {
+  // Create a promise that resolves after 2 seconds with the input number
+  const promise1 = new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(Number(input.value));
+      resolve(inputNumber);
     }, 2000);
   });
 
-  promise1.then((num) => {
-    output.textContent = `Result: ${num}`;
-    return num;
-  })
-  .then((num) => {
-    const promise2 = new Promise((resolve) => {
+  // Chain promise1 with a second promise that multiplies the number by 2 and resolves after 1 second
+  const promise2 = promise1.then((number) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(num * 2);
+        const result = number * 2;
+        resolve(result);
       }, 1000);
     });
-    return promise2;
-  })
-  .then((num) => {
-    output.textContent = `Result: ${num}`;
-    return num;
-  })
-  .then((num) => {
-    const promise3 = new Promise((resolve) => {
+  });
+
+  // Chain promise2 with a third promise that subtracts 3 from the number and resolves after 1 second
+  const promise3 = promise2.then((number) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(num - 3);
+        const result = number - 3;
+        resolve(result);
       }, 1000);
     });
-    return promise3;
-  })
-  .then((num) => {
-    output.textContent = `Result: ${num}`;
-    return num;
-  })
-  .then((num) => {
-    const promise4 = new Promise((resolve) => {
+  });
+
+  // Chain promise3 with a fourth promise that divides the number by 2 and resolves after 1 second
+  const promise4 = promise3.then((number) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(num / 2);
+        const result = number / 2;
+        resolve(result);
       }, 1000);
     });
-    return promise4;
-  })
-  .then((num) => {
-    output.textContent = `Result: ${num}`;
-    return num;
-  })
-  .then((num) => {
-    const promise5 = new Promise((resolve) => {
+  });
+
+  // Chain promise4 with a fifth promise that adds 10 to the number and resolves after 1 second
+  const promise5 = promise4.then((number) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(num + 10);
+        const result = number + 10;
+        resolve(result);
       }, 1000);
     });
-    return promise5;
-  })
-  .then((num) => {
-    output.textContent = `Final Result: ${num}`;
-  })
-  .catch((error) => {
-    console.log(error);
+  });
+
+  // Update the text content of the output div with the final result
+  promise5.then((finalResult) => {
+    document.getElementById("output").textContent = `Final Result: ${finalResult}`;
   });
 });
